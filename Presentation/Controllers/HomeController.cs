@@ -14,7 +14,7 @@ namespace Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private PasteBusiness db = new PasteBusiness();
+        private PasteBusiness db = new PasteBusiness(new PasteContext());
 
         // GET: /
         public ActionResult Index()

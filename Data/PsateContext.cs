@@ -18,6 +18,6 @@ namespace Data
 
         }
 
-        public DbSet<Paste> Pastes { get; set; }
+        public virtual DbSet<Paste> Pastes { get; set; }
     }
 }

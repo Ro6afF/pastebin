@@ -14,17 +14,19 @@ namespace Business
     {
         private PasteContext pasteContext;
 
+        public PasteBusiness(PasteContext context)
+        {
+            pasteContext = context;
+        }
+
         /// <summary>
         /// This method gets all the records from the DB, which are neither hidden nor expiered.
         /// </summary>
         /// <returns>All the records from the DB, which are neither hidden nor expiered</returns>
         public List<Paste> GetAll()
         {
-            using (pasteContext = new PasteContext())
-            {
-                // Get all records from the DB
-                return pasteContext.Pastes.Where(x => !x.IsHidden && DateTime.Now < x.Expieres).ToList();
-            }
+            // Get all records from the DB
+            return pasteContext.Pastes.Where(x => !x.IsHidden && DateTime.Now < x.Expieres).ToList();
         }
 
         /// <summary>
@@ -34,11 +36,12 @@ namespace Business
         /// <returns>All the pastes created by the given author</returns>
         public List<Paste> GetAllByAuthor(string authorID)
         {
-            using (pasteContext = new PasteContext())
+            // Get all records which are creaded by the given user
+            if (authorID == null)
             {
-                // Get all records which are creaded by the given user
-                return pasteContext.Pastes.Where(x => x.AuthorID == authorID).ToList();
+                return new List<Paste>();
             }
+            return pasteContext.Pastes.Where(x => x.AuthorID == authorID).ToList();
         }
         /// <summary>
         /// This method finds a paste by the given id and returns it
@@ -54,16 +57,16 @@ namespace Business
             {
                 throw new ArgumentException("Id cannot be null");
             }
-            using (pasteContext = new PasteContext())
+            try
             {
                 // Find the record by ID
-                var result = pasteContext.Pastes.Find(id);
-                // Check if the record exists
-                if (result == null)
-                {
-                    throw new KeyNotFoundException("No such a record in the DB");
-                }
+                var result = pasteContext.Pastes.Where(x => x.Id == id).First();
                 return result;
+            }
+            catch (InvalidOperationException)
+            {
+                // There is no such a record
+                throw new KeyNotFoundException("No such a record in the DB");
             }
         }
         /// <summary>
@@ -72,12 +75,9 @@ namespace Business
         /// <param name="paste">The paste to be added to the DB</param>
         public void Add(Paste paste)
         {
-            using (pasteContext = new PasteContext())
-            {
-                // Add new record in the DB
-                pasteContext.Pastes.Add(paste);
-                pasteContext.SaveChanges();
-            }
+            // Add new record in the DB
+            pasteContext.Pastes.Add(paste);
+            pasteContext.SaveChanges();
         }
         /// <summary>
         /// Changes the values of the record from the DB with the same ID as the give. It sets the properties of the given to the one in the database.
@@ -88,24 +88,21 @@ namespace Business
         /// <exception cref="KeyNotFoundException">Thrown when the given paste does not exist in the database.</exception>
         public void Update(Paste paste, string authorID)
         {
-            using (pasteContext = new PasteContext())
+            // Find the record by id
+            var item = pasteContext.Pastes.Find(paste.Id);
+            // Check if the record exists
+            if (item == null)
             {
-                // Find the record by id
-                var item = pasteContext.Pastes.Find(paste.Id);
-                // Check if the record exists
-                if (item == null)
-                {
-                    throw new KeyNotFoundException("Record doesn't exist");
-                }
-                // Check if the user can edit the record
-                if (item.AuthorID != authorID)
-                {
-                    throw new InvalidOperationException("The user is not permited to do this!");
-                }
-                // Update the record
-                pasteContext.Entry(item).CurrentValues.SetValues(paste);
-                pasteContext.SaveChanges();
+                throw new KeyNotFoundException("Record doesn't exist");
             }
+            // Check if the user can edit the record
+            if (item.AuthorID != authorID || authorID == null)
+            {
+                throw new InvalidOperationException("The user is not permited to do this!");
+            }
+            // Update the record
+            pasteContext.Entry(item).CurrentValues.SetValues(paste);
+            pasteContext.SaveChanges();
         }
 
         /// <summary>
@@ -116,21 +113,18 @@ namespace Business
         /// <exception cref="InvalidOperationException">Thrown when the current user is not the author</exception>
         public void Delete(int id, string authorID)
         {
-            using (pasteContext = new PasteContext())
+            // Find the record by id
+            var paste = pasteContext.Pastes.Find(id);
+            if (paste != null)
             {
-                // Find the record by id
-                var paste = pasteContext.Pastes.Find(id);
-                if (paste != null)
+                // Check if the record exists
+                if (paste.AuthorID != authorID || authorID == null)
                 {
-                    // Check if the record exists
-                    if (paste.AuthorID != authorID)
-                    {
-                        throw new InvalidOperationException("The user is not permited to do this!");
-                    }
-                    // Delete the record
-                    pasteContext.Pastes.Remove(paste);
-                    pasteContext.SaveChanges();
+                    throw new InvalidOperationException("The user is not permited to do this!");
                 }
+                // Delete the record
+                pasteContext.Pastes.Remove(paste);
+                pasteContext.SaveChanges();
             }
         }
     }
