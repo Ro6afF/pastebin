@@ -110,7 +110,7 @@ namespace Presentation.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("MyPastes");
             }
             return View(paste);
         }
@@ -146,7 +146,7 @@ namespace Presentation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("MyPastes");
         }
     }
 }

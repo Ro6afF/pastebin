@@ -88,21 +88,30 @@ namespace Business
         /// <exception cref="KeyNotFoundException">Thrown when the given paste does not exist in the database.</exception>
         public void Update(Paste paste, string authorID)
         {
-            // Find the record by id
-            var item = pasteContext.Pastes.Find(paste.Id);
-            // Check if the record exists
-            if (item == null)
+            bool didIthrow = false;
+            try
             {
+                // Find the record by id
+                var item = pasteContext.Pastes.Where(x => x.Id == paste.Id).First();
+                // Check if the user can edit the record
+                if (item.AuthorID != authorID || authorID == null)
+                {
+                    didIthrow = true;
+                    throw new InvalidOperationException("The user is not permited to do this!");
+                }
+                // Update the record
+                pasteContext.Entry(item).CurrentValues.SetValues(paste);
+                pasteContext.SaveChanges();
+            }
+            catch (InvalidOperationException e)
+            {
+                if (didIthrow)
+                {
+                    throw e;
+                }
+                // There is no such a record
                 throw new KeyNotFoundException("Record doesn't exist");
             }
-            // Check if the user can edit the record
-            if (item.AuthorID != authorID || authorID == null)
-            {
-                throw new InvalidOperationException("The user is not permited to do this!");
-            }
-            // Update the record
-            pasteContext.Entry(item).CurrentValues.SetValues(paste);
-            pasteContext.SaveChanges();
         }
 
         /// <summary>
@@ -113,18 +122,27 @@ namespace Business
         /// <exception cref="InvalidOperationException">Thrown when the current user is not the author</exception>
         public void Delete(int id, string authorID)
         {
-            // Find the record by id
-            var paste = pasteContext.Pastes.Find(id);
-            if (paste != null)
+            bool didIrise = false;
+            try
             {
-                // Check if the record exists
+                // Find the record by id
+                var paste = pasteContext.Pastes.Where(x => x.Id == id).First();
+                // Check if the user is permited to do so
                 if (paste.AuthorID != authorID || authorID == null)
                 {
+                    didIrise = true;
                     throw new InvalidOperationException("The user is not permited to do this!");
                 }
                 // Delete the record
                 pasteContext.Pastes.Remove(paste);
                 pasteContext.SaveChanges();
+            }
+            catch (InvalidOperationException e)
+            {
+                if (didIrise)
+                {
+                    throw e;
+                }
             }
         }
     }

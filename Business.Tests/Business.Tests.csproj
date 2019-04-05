@@ -74,6 +74,8 @@
     <Compile Include="PasteTestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AddTests.cs" />
+    <Compile Include="DeleteTests.cs" />
+    <Compile Include="UpdateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
