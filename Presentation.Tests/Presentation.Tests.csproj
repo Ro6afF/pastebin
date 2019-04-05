@@ -105,9 +105,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Presentation\Presentation.csproj">
+    <ProjectReference Include="..\Presentation\Presentei6un.csproj">
       <Project>{06E353EA-763E-4260-9F9D-BE5948313258}</Project>
-      <Name>Presentation</Name>
+      <Name>Presentei6un</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

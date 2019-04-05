@@ -1,0 +1,24 @@
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\Data.dll.config
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\Data.dll
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\Data.pdb
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\EntityFramework.dll
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\EntityFramework.xml
+C:\Users\dimozavar\source\repos\Pastebin\Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\dimozavar\source\repos\Pastebin\Data\obj\Debug\Data.csprojAssemblyReference.cache
+C:\Users\dimozavar\source\repos\Pastebin\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+C:\Users\dimozavar\source\repos\Pastebin\Data\obj\Debug\Data.csproj.CopyComplete
+C:\Users\dimozavar\source\repos\Pastebin\Data\obj\Debug\Data.dll
+C:\Users\dimozavar\source\repos\Pastebin\Data\obj\Debug\Data.pdb
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\Data.dll.config
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\Data.dll
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\Data.pdb
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\EntityFramework.dll
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\EntityFramework.xml
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\obj\Debug\Data.csprojAssemblyReference.cache
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\obj\Debug\Data.csproj.CopyComplete
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\obj\Debug\Data.dll
+C:\Users\dimozavar\source\repos\Pastebin - Copy\Data\obj\Debug\Data.pdb
