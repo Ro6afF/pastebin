@@ -56,12 +56,25 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="PasteBusinessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{9b80745b-bbd4-4962-8d85-3b1fdfdaf078}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{4ec9a00a-eb4a-45fd-9df9-4263b9f350b0}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

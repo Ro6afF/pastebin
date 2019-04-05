@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Data
 {
+    /// <summary>
+    /// A class which is a context to interaact with the DB
+    /// </summary>
     public class PasteContext : DbContext
     {
         public PasteContext()

@@ -19,7 +19,18 @@ namespace Presentation.Controllers
         // GET: /
         public ActionResult Index()
         {
-            return View(db.GetAll());
+            var res = db.GetAll();
+            res.Reverse();
+            return View(res);
+        }
+
+        public ActionResult MyPastes()
+        {
+            if (User.Identity.GetUserId() != null)
+            {
+                return View(db.GetAllByAuthor(User.Identity.GetUserId()));
+            }
+            return View(new List<Paste>());
         }
 
         // GET: Details/5
@@ -55,7 +66,7 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                paste.AuthorID = User.Identity.GetUserId<int>();
+                paste.AuthorID = User.Identity.GetUserId();
                 db.Add(paste);
                 return RedirectToAction("Index");
             }
@@ -91,7 +102,14 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Update(paste);
+                try
+                {
+                    db.Update(paste, User.Identity.GetUserId());
+                }
+                catch (InvalidOperationException)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+                }
                 return RedirectToAction("Index");
             }
             return View(paste);
@@ -105,9 +123,9 @@ namespace Presentation.Controllers
                 Paste paste = db.Get(id);
                 return View(paste);
             }
-            catch (ArgumentException)
+            catch (InvalidOperationException)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
             catch (KeyNotFoundException)
             {
@@ -120,7 +138,14 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.Delete(id);
+            try
+            {
+                db.Delete(id, User.Identity.GetUserId());
+            }
+            catch (InvalidOperationException)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             return RedirectToAction("Index");
         }
     }

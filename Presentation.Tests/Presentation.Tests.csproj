@@ -105,10 +105,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Presentation\Presentei6un.csproj">
-      <Project>{06E353EA-763E-4260-9F9D-BE5948313258}</Project>
-      <Name>Presentei6un</Name>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{9b80745b-bbd4-4962-8d85-3b1fdfdaf078}</Project>
+      <Name>Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{4ec9a00a-eb4a-45fd-9df9-4263b9f350b0}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Presentation\Presentation.csproj">
+      <Project>{6ff884f9-7c42-4d57-9e77-2642646e57ee}</Project>
+      <Name>Presentation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

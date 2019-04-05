@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Data
 {
+    /// <summary>
+    /// A class which represents the paste structure in the database.
+    /// </summary>
     public class Paste
     {
         public int Id { get; set; }
@@ -17,7 +20,7 @@ namespace Data
         public string Description { get; set; }
         [DisplayName("Is Hidden")]
         public bool IsHidden { get; set; }
-        public int AuthorID { get; set; }
+        public string AuthorID { get; set; }
         public DateTime Expieres { get; set; }
     }
 }
