@@ -100,6 +100,7 @@ namespace Business
                     throw new InvalidOperationException("The user is not permited to do this!");
                 }
                 // Update the record
+                paste.AuthorID = item.AuthorID;
                 pasteContext.Entry(item).CurrentValues.SetValues(paste);
                 pasteContext.SaveChanges();
             }

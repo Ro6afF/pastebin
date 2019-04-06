@@ -9,7 +9,18 @@ namespace Business.Tests
     [TestClass]
     public class UpdateTests : PasteTestClass
     {
-        
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void NormalUpdate()
+        {
+            Paste p = new Paste { AuthorID = "pesho", Content = "content", Description = "description", Expieres = DateTime.MaxValue, IsHidden = false, Title = "title", Id = 0 };
+            getDbContext(new List<Paste> { p });
+            p.Content = "updatedContent";
+            db.Update(p, "pesho");
+
+            mockContext.Verify(m => m.Entry(It.IsAny<Paste>()), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]

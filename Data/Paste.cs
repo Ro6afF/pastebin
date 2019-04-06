@@ -18,9 +18,14 @@ namespace Data
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public string Description { get; set; }
+
+        // Describes whether the paste should be shown to everybody
         [DisplayName("Is Hidden")]
         public bool IsHidden { get; set; }
+
         public string AuthorID { get; set; }
+
+        // The date when the paste stops being shown to everybody
         public DateTime Expieres { get; set; }
     }
 }
