@@ -12,11 +12,11 @@ namespace Business
     /// </summary>
     public class PasteBusiness
     {
-        private PasteContext pasteContext;
+        private DBContext context;
 
-        public PasteBusiness(PasteContext context)
+        public PasteBusiness(DBContext context)
         {
-            pasteContext = context;
+            this.context = context;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Business
         public List<Paste> GetAll()
         {
             // Get all records from the DB
-            return pasteContext.Pastes.Where(x => !x.IsHidden && DateTime.Now < x.Expieres).ToList();
+            return context.Pastes.Where(x => !x.IsHidden && DateTime.Now < x.Expieres).ToList();
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Business
             {
                 return new List<Paste>();
             }
-            return pasteContext.Pastes.Where(x => x.AuthorID == authorID).ToList();
+            return context.Pastes.Where(x => x.AuthorID == authorID).ToList();
         }
         /// <summary>
         /// This method finds a paste by the given id and returns it
@@ -60,7 +60,7 @@ namespace Business
             try
             {
                 // Find the record by ID
-                var result = pasteContext.Pastes.Where(x => x.Id == id).First();
+                var result = context.Pastes.Where(x => x.Id == id).First();
                 return result;
             }
             catch (InvalidOperationException)
@@ -76,8 +76,8 @@ namespace Business
         public void Add(Paste paste)
         {
             // Add new record in the DB
-            pasteContext.Pastes.Add(paste);
-            pasteContext.SaveChanges();
+            context.Pastes.Add(paste);
+            context.SaveChanges();
         }
         /// <summary>
         /// Changes the values of the record from the DB with the same ID as the give. It sets the properties of the given to the one in the database.
@@ -92,7 +92,7 @@ namespace Business
             try
             {
                 // Find the record by id
-                var item = pasteContext.Pastes.Where(x => x.Id == paste.Id).First();
+                var item = context.Pastes.Where(x => x.Id == paste.Id).First();
                 // Check if the user can edit the record
                 if (item.AuthorID != authorID || authorID == null)
                 {
@@ -101,8 +101,8 @@ namespace Business
                 }
                 // Update the record
                 paste.AuthorID = item.AuthorID;
-                pasteContext.Entry(item).CurrentValues.SetValues(paste);
-                pasteContext.SaveChanges();
+                context.Entry(item).CurrentValues.SetValues(paste);
+                context.SaveChanges();
             }
             catch (InvalidOperationException e)
             {
@@ -127,7 +127,7 @@ namespace Business
             try
             {
                 // Find the record by id
-                var paste = pasteContext.Pastes.Where(x => x.Id == id).First();
+                var paste = context.Pastes.Where(x => x.Id == id).First();
                 // Check if the user is permited to do so
                 if (paste.AuthorID != authorID || authorID == null)
                 {
@@ -135,8 +135,8 @@ namespace Business
                     throw new InvalidOperationException("The user is not permited to do this!");
                 }
                 // Delete the record
-                pasteContext.Pastes.Remove(paste);
-                pasteContext.SaveChanges();
+                context.Pastes.Remove(paste);
+                context.SaveChanges();
             }
             catch (InvalidOperationException e)
             {

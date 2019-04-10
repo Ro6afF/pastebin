@@ -49,12 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comment.cs" />
-    <Compile Include="CommentContext.cs" />
-    <Compile Include="PsateContext.cs" />
+    <Compile Include="DBContext.cs" />
     <Compile Include="Paste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rating.cs" />
-    <Compile Include="RatingContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

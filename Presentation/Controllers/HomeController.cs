@@ -14,15 +14,11 @@ namespace Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private PasteBusiness db = new PasteBusiness(new PasteContext());
+        private PasteBusiness db = new PasteBusiness(new DBContext());
 
         // GET: /
         public ActionResult Index()
         {
-            using (var test = new CommentContext())
-            {
-                test.Comments.ToList();
-            }
             var res = db.GetAll();
             res.Reverse();
             return View(res);
