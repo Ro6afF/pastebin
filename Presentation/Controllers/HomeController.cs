@@ -19,6 +19,10 @@ namespace Presentation.Controllers
         // GET: /
         public ActionResult Index()
         {
+            using (var test = new CommentContext())
+            {
+                test.Comments.ToList();
+            }
             var res = db.GetAll();
             res.Reverse();
             return View(res);

@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 namespace Data
 {
     /// <summary>
-    /// A class which is a context to interaact with the DB of pastes
+    /// A class which is a context to interaact with the DB of ratings
     /// </summary>
-    public class PasteContext : DbContext
+    public class RatingContext : DbContext
     {
-        public PasteContext()
-            : base("name=PasteContext")
+        public RatingContext()
+            : base("name=RatingContext")
         {
 
         }
 
         // A set of all entries
-        public virtual DbSet<Paste> Pastes { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
 
         // Enables mocking of the function Entry
-        public virtual DbEntityEntry<Paste> Entry(Paste p)
+        public virtual DbEntityEntry<Rating> Entry(Rating p)
         {
             return base.Entry(p);
         }

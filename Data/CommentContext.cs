@@ -11,19 +11,19 @@ namespace Data
     /// <summary>
     /// A class which is a context to interaact with the DB of pastes
     /// </summary>
-    public class PasteContext : DbContext
+    public class CommentContext : DbContext
     {
-        public PasteContext()
-            : base("name=PasteContext")
+        public CommentContext()
+            : base("name=CommentContext")
         {
 
         }
 
         // A set of all entries
-        public virtual DbSet<Paste> Pastes { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
 
         // Enables mocking of the function Entry
-        public virtual DbEntityEntry<Paste> Entry(Paste p)
+        public virtual DbEntityEntry<Comment> Entry(Comment p)
         {
             return base.Entry(p);
         }
