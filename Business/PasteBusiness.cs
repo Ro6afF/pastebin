@@ -94,7 +94,7 @@ namespace Business
                 // Find the record by id
                 var item = context.Pastes.Where(x => x.Id == paste.Id).First();
                 // Check if the user can edit the record
-                if (item.AuthorID != authorID || authorID == null)
+                if (item.AuthorID != authorID || authorID == null || authorID == "")
                 {
                     didIthrow = true;
                     throw new InvalidOperationException("The user is not permited to do this!");
@@ -129,7 +129,7 @@ namespace Business
                 // Find the record by id
                 var paste = context.Pastes.Where(x => x.Id == id).First();
                 // Check if the user is permited to do so
-                if (paste.AuthorID != authorID || authorID == null)
+                if (paste.AuthorID != authorID || authorID == null || authorID == "")
                 {
                     didIrise = true;
                     throw new InvalidOperationException("The user is not permited to do this!");

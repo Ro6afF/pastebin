@@ -14,21 +14,22 @@ namespace Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private PasteBusiness db = new PasteBusiness(new DBContext());
+        private PasteBusiness dbPastes = new PasteBusiness(new DBContext());
+        private CommentBusiness dbComments = new CommentBusiness(new DBContext());
 
         // GET: /
         public ActionResult Index()
         {
-            var res = db.GetAll();
+            var res = dbPastes.GetAll();
             res.Reverse();
             return View(res);
         }
 
         public ActionResult MyPastes()
         {
-            if (User.Identity.GetUserId() != null)
+            if (User.Identity.Name != null)
             {
-                return View(db.GetAllByAuthor(User.Identity.GetUserId()));
+                return View(dbPastes.GetAllByAuthor(User.Identity.Name));
             }
             return View(new List<Paste>());
         }
@@ -38,7 +39,9 @@ namespace Presentation.Controllers
         {
             try
             {
-                Paste paste = db.Get(id);
+                Paste paste = dbPastes.Get(id);
+                ViewBag.Comments = dbComments.GetAll(id);
+                ViewBag.Comments.Reverse();
                 return View(paste);
             }
             catch (ArgumentException)
@@ -66,8 +69,8 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                paste.AuthorID = User.Identity.GetUserId();
-                db.Add(paste);
+                paste.AuthorID = User.Identity.Name;
+                dbPastes.Add(paste);
                 return RedirectToAction("Index");
             }
 
@@ -77,10 +80,9 @@ namespace Presentation.Controllers
         // GET: Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.userID = User.Identity.GetUserId<string>();
             try
             {
-                Paste paste = db.Get(id);
+                Paste paste = dbPastes.Get(id);
                 return View(paste);
             }
             catch (ArgumentException)
@@ -104,7 +106,7 @@ namespace Presentation.Controllers
             {
                 try
                 {
-                    db.Update(paste, User.Identity.GetUserId());
+                    dbPastes.Update(paste, User.Identity.Name);
                 }
                 catch (InvalidOperationException)
                 {
@@ -120,7 +122,7 @@ namespace Presentation.Controllers
         {
             try
             {
-                Paste paste = db.Get(id);
+                Paste paste = dbPastes.Get(id);
                 return View(paste);
             }
             catch (InvalidOperationException)
@@ -140,7 +142,7 @@ namespace Presentation.Controllers
         {
             try
             {
-                db.Delete(id, User.Identity.GetUserId());
+                dbPastes.Delete(id, User.Identity.Name);
             }
             catch (InvalidOperationException)
             {

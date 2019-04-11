@@ -34,3 +34,19 @@
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
+<form action="/Comments/Create" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" value="@Model.Id" name="PasteId" />
+    <input type="text" name="Content" class="form-control" />
+    <input type="submit" class="btn btn-success" value="Comment" id="comment" />
+</form>
+<div id="comments">
+    @foreach (var comment in ViewBag.Comments)
+    {
+        <div class="form-group">
+            <label>@((comment.Author == "") ? "Anonymous" : comment.Author)</label>
+            <div class="form-control">@comment.Content</div>
+            <hr />
+        </div>
+    }
+</div>

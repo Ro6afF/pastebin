@@ -29,5 +29,13 @@ namespace Data
         {
             return base.Entry(p);
         }
+        public virtual DbEntityEntry<Comment> Entry(Comment p)
+        {
+            return base.Entry(p);
+        }
+        public virtual DbEntityEntry<Rating> Entry(Rating p)
+        {
+            return base.Entry(p);
+        }
     }
 }
