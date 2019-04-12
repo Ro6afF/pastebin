@@ -70,6 +70,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rating\RateTests.cs" />
+    <Compile Include="Rating\RatingTestClass.cs" />
+    <Compile Include="Rating\GetTests.cs" />
     <Compile Include="Comments\AddTests.cs" />
     <Compile Include="Comments\CommentTestClass.cs" />
     <Compile Include="Comments\DeleteTests.cs" />

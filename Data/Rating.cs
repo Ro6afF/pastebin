@@ -14,6 +14,7 @@ namespace Data
         public int Id { get; set; }
         // The Id of the paste which is commented
         public int PasteId { get; set; }
+        public string Author { get; set; }
         public int Rate { get; set; }
     }
 }
