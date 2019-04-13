@@ -34,6 +34,94 @@
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
+@if (Request.IsAuthenticated)
+{
+    <style>
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+            .dropbtn:hover, .dropbtn:focus {
+                background-color: #3e8e41;
+            }
+
+        .dropdown {
+            float: right;
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            right: 0;
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Rate - @Math.Round(ViewBag.Rating, 2)</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a onclick="rate(1)">1</a>
+            <a onclick="rate(2)">2</a>
+            <a onclick="rate(3)">3</a>
+            <a onclick="rate(4)">4</a>
+            <a onclick="rate(5)">5</a>
+        </div>
+    </div>
+
+    <script>
+        function rate(a) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.reload();
+                }
+            };
+            xhttp.open("POST", "/Home/Rate?rate="+a+"&id="+@Model.Id, true);
+            xhttp.send();
+        }
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+}
 <form action="/Comments/Create" method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" value="@Model.Id" name="PasteId" />

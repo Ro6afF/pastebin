@@ -16,6 +16,7 @@ namespace Presentation.Controllers
     {
         private PasteBusiness dbPastes = new PasteBusiness(new DBContext());
         private CommentBusiness dbComments = new CommentBusiness(new DBContext());
+        private RatingBusiness dbRatings = new RatingBusiness(new DBContext());
 
         // GET: /
         public ActionResult Index()
@@ -34,6 +35,12 @@ namespace Presentation.Controllers
             return View(new List<Paste>());
         }
 
+        [HttpPost]
+        public void Rate(int rate, int id)
+        {
+            dbRatings.Rate(id, rate, User.Identity.Name);
+        }
+
         // GET: Details/5
         public ActionResult Details(int? id)
         {
@@ -42,6 +49,7 @@ namespace Presentation.Controllers
                 Paste paste = dbPastes.Get(id);
                 ViewBag.Comments = dbComments.GetAll(id);
                 ViewBag.Comments.Reverse();
+                ViewBag.Rating = dbRatings.Get(id);
                 return View(paste);
             }
             catch (ArgumentException)
